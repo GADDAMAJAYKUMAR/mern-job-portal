@@ -201,7 +201,9 @@ router.get('/profile/me', async (req, res) => {
     res.status(500).json({ error: 'Error fetching profile' });
   }
 });
-app.get('/api/user/search', async (req, res) => {
+
+// ========== FIXED: Search Route ==========
+router.get('/user/search', async (req, res) => {
   const term = req.query.term;
   const jobs = await Job.find({
     $or: [
