@@ -1,0 +1,13 @@
+# Ignore Node.js stuff
+node_modules/
+.env
+
+# Ignore React build
+client/node_modules/
+client/build/
+
+# Ignore uploads from backend
+server/uploads/
+
+# Logs
+*.log
