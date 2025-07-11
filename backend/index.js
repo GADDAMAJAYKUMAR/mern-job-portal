@@ -19,7 +19,8 @@ const __dirname = dirname(__filename);
 const app = express();
 
 // Middleware
-app.use(cors());
+
+app.use(cors({ origin: 'https://your-frontend.netlify.app', credentials: true }));
 app.use(express.json());
 
 // Serve uploaded files statically
