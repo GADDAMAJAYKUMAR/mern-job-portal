@@ -107,7 +107,7 @@ const StudentProfile = () => {
 
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:5000/api/user/profile/upload', {
+      const res = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/profile/upload`, {
         method: 'POST',
         body: formData,
       });

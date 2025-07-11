@@ -201,5 +201,16 @@ router.get('/profile/me', async (req, res) => {
     res.status(500).json({ error: 'Error fetching profile' });
   }
 });
+app.get('/api/user/search', async (req, res) => {
+  const term = req.query.term;
+  const jobs = await Job.find({
+    $or: [
+      { title: { $regex: term, $options: 'i' } },
+      { company: { $regex: term, $options: 'i' } },
+      { location: { $regex: term, $options: 'i' } }
+    ]
+  });
+  res.json(jobs);
+});
 
 export default router;

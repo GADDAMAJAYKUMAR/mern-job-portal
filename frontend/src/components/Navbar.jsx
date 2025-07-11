@@ -10,7 +10,8 @@ const TopNavbar = () => {
     if (!term.trim()) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/user/search?term=${encodeURIComponent(term)}`);
+      const res = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/search?term=${encodeURIComponent(term)}`);
+      if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setResults(data);
     } catch (err) {
@@ -19,9 +20,8 @@ const TopNavbar = () => {
     }
   };
 
-  // Just open the URL in a new tab on apply
   const handleApply = (applyUrl) => {
-    if (applyUrl) {
+    if (applyUrl && applyUrl.startsWith("http")) {
       window.open(applyUrl, '_blank');
     } else {
       alert("❌ No apply link available");
@@ -48,22 +48,20 @@ const TopNavbar = () => {
         </Form>
       </Navbar>
 
-      {/* Search Results */}
       {results.length > 0 && (
         <div className="container mt-3">
-          <h5>🔍 Results:</h5>
+          <h5>🔍 Search Results:</h5>
           {results.map((job) => (
             <div key={job._id} className="border p-3 mb-3 rounded shadow-sm">
               <h6>{job.title}</h6>
               <p><strong>{job.company}</strong> - {job.location}</p>
-              <div className="d-flex gap-2">
-                <button
-                  className="btn btn-outline-primary btn-sm"
-                  onClick={() => handleApply(job.applyUrl)}
-                >
-                  Apply Now
-                </button>
-              </div>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => handleApply(job.applyUrl)}
+              >
+                Apply Now
+              </Button>
             </div>
           ))}
         </div>

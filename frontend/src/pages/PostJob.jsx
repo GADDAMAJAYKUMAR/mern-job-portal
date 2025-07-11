@@ -20,7 +20,7 @@ const PostJob = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:5000/api/user/post', {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/post`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)

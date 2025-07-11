@@ -9,7 +9,7 @@ const RecruiterDashboard = () => {
 
   const fetchAllJobs = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/user/all');
+      const response = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/all`);
       if (!response.ok) throw new Error('Failed to fetch jobs');
       const data = await response.json();
       setJobs(data);
