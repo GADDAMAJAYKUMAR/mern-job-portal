@@ -1,15 +1,12 @@
-// ===== server.js =====
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
+import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 // Routes
 import jobRoutes from './routes/jobRoutes.js';
-
 
 dotenv.config();
 
@@ -18,22 +15,32 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
+// ✅ CORS configuration
+const allowedOrigins = [
+  "https://jobportal-mernajay.netlify.app", // your main frontend
+  "https://68713cb--jobportal-mernajay.netlify.app", // Netlify preview
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('❌ Not allowed by CORS: ' + origin));
+    }
+  },
+  credentials: true,
+}));
+
 // Middleware
-
-app.use(cors({ origin: 'https://your-frontend.netlify.app', credentials: true }));
 app.use(express.json());
-app.use('/uploads', express.static('uploads'));
-
-// Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
-
 app.use('/api/user', jobRoutes);
 app.get('/', (req, res) => {
-  res.send('API is working!');
+  res.send('🚀 API is working!');
 });
-
 
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URI, {
