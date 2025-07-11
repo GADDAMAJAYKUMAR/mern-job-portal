@@ -22,6 +22,7 @@ const app = express();
 
 app.use(cors({ origin: 'https://your-frontend.netlify.app', credentials: true }));
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
