@@ -7,24 +7,23 @@ const JobSeekerDashboard = () => {
   const [error, setError] = useState('');
   const email = localStorage.getItem('email');
 
-  const fetchAllJobs = async () => {
-    try {
-  const res = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/all`);
-      if (!response.ok) throw new Error('Failed to fetch jobs');
-      const data = await response.json();
+const fetchAllJobs = async () => {
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/all`);
+    if (!res.ok) throw new Error('Failed to fetch jobs');
+    const data = await res.json();
 
-      // Initialize applied state as false
-      const jobsWithState = data.map(job => ({
-        ...job,
-        applied: false,
-      }));
+    const jobsWithState = data.map(job => ({
+      ...job,
+      applied: false,
+    }));
 
-      setJobs(jobsWithState);
-    } catch (err) {
-      console.error(err);
-      setError('❌ Failed to load jobs');
-    }
-  };
+    setJobs(jobsWithState);
+  } catch (err) {
+    console.error(err);
+    setError('❌ Failed to load jobs');
+  }
+};
 
   const handleApply = async (jobId, index) => {
     try {
