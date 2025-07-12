@@ -5,20 +5,20 @@ import dotenv from 'dotenv';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-// Routes
+// Import routes
 import jobRoutes from './routes/jobRoutes.js';
 
 dotenv.config();
+const app = express();
 
+// Fix for __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const app = express();
-
-// ✅ CORS configuration
+// ✅ Enable CORS for your Netlify frontend
 const allowedOrigins = [
-  "https://jobportal-mernajay.netlify.app", // your main frontend
-  "https://68713cb--jobportal-mernajay.netlify.app", // Netlify preview
+  "https://jobportal-mernajay.netlify.app",
+  "https://68713cb--jobportal-mernajay.netlify.app", // optional Netlify preview
 ];
 
 app.use(cors({
@@ -32,17 +32,17 @@ app.use(cors({
   credentials: true,
 }));
 
-// Middleware
+// ✅ Middleware
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Routes
+// ✅ Routes
 app.use('/api/user', jobRoutes);
 app.get('/', (req, res) => {
   res.send('🚀 API is working!');
 });
 
-// Connect MongoDB
+// ✅ MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
