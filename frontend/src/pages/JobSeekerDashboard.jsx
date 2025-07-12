@@ -28,8 +28,7 @@ const fetchAllJobs = async () => {
   const handleApply = async (jobId, index) => {
     try {
       if (!email) return alert('Please log in first.');
-
-      const res = await fetch(`http://localhost:5000/api/user/apply/${jobId}`, {
+   const res = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/apply/${jobId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
