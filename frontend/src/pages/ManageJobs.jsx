@@ -14,7 +14,7 @@ const ManageJobs = () => {
 
   const fetchJobs = async () => {
     try {
-     fetch(`${process.env.REACT_APP_API_BASE}/api/user/all`);
+      const res = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/all`);
       if (!res.ok) throw new Error('Failed to fetch jobs');
       const data = await res.json();
       setJobs(data);
@@ -38,12 +38,11 @@ const ManageJobs = () => {
   const deleteJob = async (id) => {
     if (!window.confirm('Delete this job?')) return;
 
-    // Clear old alerts
     setMessage('');
     setError('');
 
     try {
-      fetch(`${process.env.REACT_APP_API_BASE}/api/user/delete/${id}`);
+      const res = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/delete/${id}`, {
         method: 'DELETE',
       });
 
@@ -69,12 +68,11 @@ const ManageJobs = () => {
   const submitEdit = async (e) => {
     e.preventDefault();
 
-    // Clear old alerts
     setMessage('');
     setError('');
 
     try {
-      fetch(`${process.env.REACT_APP_API_BASE}/api/user/edit/${editingJob._id}`);
+      const res = await fetch(`${process.env.REACT_APP_API_BASE}/api/user/edit/${editingJob._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, company, location }),
