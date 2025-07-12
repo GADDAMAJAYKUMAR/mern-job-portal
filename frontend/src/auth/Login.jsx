@@ -32,13 +32,11 @@ const Login = () => {
       if (response.ok) {
         setMessage('Login successful');
 
-        // Store data in localStorage
         localStorage.setItem('user', JSON.stringify(result));
         localStorage.setItem('name', result.name);
         localStorage.setItem('email', result.email);
         localStorage.setItem('role', result.role);
 
-        // Redirect based on role
         if (result.role === 'student') {
           navigate('/jobseeker');
         } else if (result.role === 'recruiter') {
@@ -57,24 +55,27 @@ const Login = () => {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center text-white"
+      className="d-flex justify-content-center align-items-center vh-100 vw-100"
       style={{
-        height: '100vh',
-        width: '100vw',
         backgroundImage: `url("/home.jpg")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
+        padding: '1rem',
       }}
     >
       <div
-        className="rounded p-4"
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', minWidth: '350px' }}
+        className="rounded p-4 w-100"
+        style={{
+          maxWidth: '400px',
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          color: 'white',
+        }}
       >
         <h3 className="text-center mb-4">Login</h3>
 
-        {error && <div className="alert alert-danger">{error}</div>}
-        {message && <div className="alert alert-success">{message}</div>}
+        {error && <div className="alert alert-danger p-2">{error}</div>}
+        {message && <div className="alert alert-success p-2">{message}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -119,8 +120,8 @@ const Login = () => {
         </form>
 
         <div className="d-flex justify-content-between mt-3">
-          <Link to="/forgot" className="text-decoration-none text-light">Forgot Password?</Link>
-          <Link to="/register" className="text-decoration-none text-light">New User</Link>
+          <Link to="/forgot" className="text-decoration-none text-light small">Forgot Password?</Link>
+          <Link to="/register" className="text-decoration-none text-light small">New User</Link>
         </div>
       </div>
     </div>
