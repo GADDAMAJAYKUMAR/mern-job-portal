@@ -14,7 +14,7 @@ const ManageJobs = () => {
 
   const fetchJobs = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/user/all');
+     fetch(`${process.env.REACT_APP_API_BASE}/api/user/all`);
       if (!res.ok) throw new Error('Failed to fetch jobs');
       const data = await res.json();
       setJobs(data);
@@ -43,7 +43,7 @@ const ManageJobs = () => {
     setError('');
 
     try {
-      const res = await fetch(`http://localhost:5000/api/user/delete/${id}`, {
+      fetch(`${process.env.REACT_APP_API_BASE}/api/user/delete/${id}`);
         method: 'DELETE',
       });
 
@@ -74,7 +74,7 @@ const ManageJobs = () => {
     setError('');
 
     try {
-      const res = await fetch(`http://localhost:5000/api/user/edit/${editingJob._id}`, {
+      fetch(`${process.env.REACT_APP_API_BASE}/api/user/edit/${editingJob._id}`);
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, company, location }),
